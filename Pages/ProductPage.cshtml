@@ -1,0 +1,112 @@
+﻿@page "/Product/{id:int?}"
+@model QLBH.Pages.ProductPageModel
+
+@{
+    var product = Model.product;
+    var products = Model.products;
+    var products_search = Model.products_search;
+    Layout = "_NhattVim";
+}
+
+<h1>@ViewData["Title"]</h1>
+@if (Model.IsProductDetail)
+{
+    <h2>@product.Name</h2>
+    <p>Mô tả: @product.Description</p>
+    <p>Giá: @product.Price</p>
+    <h2>Ảnh sản phẩm:</h2>
+    @foreach (var img in Model.product.ImagePaths)
+    {
+        <div class="col-6 col-md-4 col-lg-3 mb-3">
+            <div class="card h-100">
+                <img src="@img" class="card-img-top img-fluid" alt="Ảnh sản phẩm">
+            </div>
+        </div>
+    }
+    <a asp-page="ProductPage" asp-route-id="">Danh sách sản phẩm</a>
+
+    <h1>Cập nhật sản phẩm</h1>
+    <form method="post" asp-page-handler="UpdateProduct">
+        <div class="mb-3">
+            <input class="form-control" type="hidden" name="id" value="@product.Id" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tên</label>
+            <input type="text" class="form-control" name="name" value="@product.Name" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <input type="text" class="form-control" name="description" value="@product.Description" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Giá</label>
+            <input type="number" class="form-control" name="price" value="@product.Price" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Cập nhật ảnh (chọn nhiều ảnh mới nếu muốn)</label>
+            <input type="file" class="form-control" name="images" multiple />
+        </div>
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+    </form>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var item in products)
+        {
+            <li class="list-group-item">
+                <a asp-page="ProductPage" asp-route-id="@item.Id">@item.Name</a>
+            </li>
+        }
+    </ul>
+    <hr>
+    <a class="btn btn-primary" asp-page="ProductPage" asp-page-handler="RemoveAll">Xóa tất cả</a>
+    <a class="btn btn-primary" asp-page="ProductPage" asp-page-handler="LoadAll">Nạp sản phẩm</a>
+
+    <hr>
+    <h1>Thêm sản phẩm mới</h1>
+    <form method="post" enctype="multipart/form-data" asp-page-handler="AddProduct">
+        <div class="mb-3">
+            <label class="form-label" asp-for="@Model.product.Name">Tên:</label>
+            <input class="form-control" asp-for="@Model.product.Name" />
+            <span class="text-danger" asp-validation-for="@Model.product.Name"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="@Model.product.Description">Mô tả:</label>
+            <input class="form-control" asp-for="@Model.product.Description" />
+            <span class="text-danger" asp-validation-for="@Model.product.Description"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="@Model.product.Price">Giá:</label>
+            <input class="form-control" asp-for="@Model.product.Price" />
+            <span class="text-danger" asp-validation-for="@Model.product.Price"></span>
+        </div>
+        <div class="mb-3">
+            <input type="file" name="UploadedImages" multiple class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <p>@Model.Message</p>
+
+    <hr>
+    <h1>Tìm kiếm sản phẩm</h1>
+    <form class="row" method="post" asp-page-handler="FindProductByName">
+        <div class="col-auto">
+            <label class="form-control-plaintext">Tên sản phẩm:</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" type="text" name="searchName" required />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </div>
+    </form>
+    <ul class="list-group mt-3">
+        @foreach (var item in products_search)
+        {
+            <li class="list-group-item">
+                <a asp-page="ProductPage" asp-route-id="@item.Id">@item.Name</a>
+            </li>
+        }
+    </ul>
+}

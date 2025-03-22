@@ -1,0 +1,42 @@
+﻿@page "/Contact"
+@model QLBH.Pages.ContactPageModel
+@{
+    ViewData["Title"] = "LIEN HE";
+    Layout = "_NhattVim";
+}
+<h1 class="display-4">Trang lien he</h1>
+<p class="lead">Dien cac thong tin lien he</p>
+<hr>
+<form method="post" class="bg-light p-2 m-2" asp-page="ContactPage">
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.contact.ContactId"></label>
+        <input type="text" class="form-control" asp-for="@Model.contact.ContactId" required />
+        <span class="text-danger" asp-validation-for="@Model.contact.ContactId"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.contact.FirstName"></label>
+        <input type="text" class="form-control" asp-for="@Model.contact.FirstName" required />
+        <span class="text-danger" asp-validation-for="@Model.contact.FirstName"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.contact.LastName"></label>
+        <input type="text" class="form-control" asp-for="@Model.contact.LastName" required />
+        <span class="text-danger" asp-validation-for="@Model.contact.LastName"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.contact.Email"></label>
+        <input type="text" class="form-control" asp-for="@Model.contact.Email" required />
+        <span class="text-danger" asp-validation-for="@Model.contact.Email"></span>
+    </div>
+    <button class="btn btn-danger" type="submit">Gui</button>
+</form>
+<p>@Model.Message</p>
+<div class="alert alert-danger">
+    <p>Thong tin Contact</p>
+    <ul>
+        <li>Contact Id: @Model.contact.ContactId</li>
+        <li>FirstName: @Model.contact.FirstName</li>
+        <li>LastName: @Model.contact.Email</li>
+        <li>Email: @Model.contact.Email</li>
+    </ul>
+</div>
