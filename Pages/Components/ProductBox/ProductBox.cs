@@ -11,7 +11,6 @@ public class ProductBox : ViewComponent
 
     public ProductBox(ProductService productService)
     {
-        productService.LoadProducts();
         products = productService.GetProducts();
     }
 

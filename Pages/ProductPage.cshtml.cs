@@ -1,111 +1,144 @@
-using QLBH.Services;
 using QLBH.Models;
+using QLBH.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
-namespace QLBH.Pages
+namespace QLBH.Pages;
+
+public class ProductPageModel : PageModel
 {
-    public class ProductPageModel : PageModel
+    [BindProperty]
+    public Product product { get; set; }
+
+    public List<Product> products { get; set; }
+    public List<Product> products_search { get; set; }
+    public string Message { get; set; }
+    public bool IsProductDetail { get; set; }
+
+    private readonly ProductService _productService;
+
+    public ProductPageModel(ProductService productService)
     {
-        [BindProperty]
-        public Product product { get; set; }
+        _productService = productService;
+        product = new Product();
+        Message = string.Empty;
+        products_search = new List<Product>();
+        products = _productService.GetProducts();
+    }
 
-        [BindProperty]
-        public IFormFileCollection UploadedImages { get; set; }
-
-        public bool IsProductDetail { get; set; }
-        public string Message { get; set; }
-
-        public List<Product> products;
-        public List<Product> products_search;
-        private readonly ProductService _productService;
-
-        public ProductPageModel(ProductService productService)
+    public void OnGet(int? id)
+    {
+        if (id != null)
         {
-            _productService = productService;
-            products_search = new List<Product>();
-            products = _productService.GetProducts();
+            ViewData["Title"] = $"Thông tin sản phẩm (ID={id.Value})";
+            product = _productService.GetProductById(id.Value);
+            IsProductDetail = true;
         }
-
-        public void OnGet(int? id)
+        else
         {
-            if (id != null)
+            ViewData["Title"] = $"Danh sách sản phẩm";
+        }
+    }
+
+    public IActionResult OnGetRemoveAll()
+    {
+        _productService.RemoveAll();
+        return RedirectToPage("ProductPage");
+    }
+
+    public IActionResult OnGetLoadAll()
+    {
+        _productService.LoadDefaultProducts();
+        return RedirectToPage("ProductPage");
+    }
+
+    public IActionResult OnPostAddProduct(List<IFormFile> UploadedImages)
+    {
+        if (ModelState.IsValid)
+        {
+            var imagePaths = new List<string>();
+            var uploadPath = Path.Combine("wwwroot", "images", "products");
+
+            if (!Directory.Exists(uploadPath))
             {
-                ViewData["Title"] = $"Thông tin sản phẩm (ID={id.Value})";
-                product = _productService.GetProductById(id.Value);
-                IsProductDetail = true;
+                Directory.CreateDirectory(uploadPath);
             }
-            else
+
+            foreach (var file in UploadedImages)
             {
-                ViewData["Title"] = $"Danh sách sản phẩm";
-            }
-        }
+                var fileName = $"{Guid.NewGuid()}_{file.FileName}";
+                var filePath = Path.Combine(uploadPath, fileName);
 
-        public IActionResult OnGetLastProduct()
-        {
-            ViewData["Title"] = $"Sản phẩm cuối cùng";
-            product = _productService.GetProducts().LastOrDefault();
-            if (product != null)
-            {
-                return Page();
-            }
-            return NotFound();
-        }
-
-        public IActionResult OnGetRemoveAll()
-        {
-            products.Clear();
-            return RedirectToPage("ProductPage");
-        }
-
-        public IActionResult OnGetLoadAll()
-        {
-            _productService.LoadProducts();
-            return RedirectToPage("ProductPage");
-        }
-
-        public IActionResult OnPostAddProduct()
-        {
-            if (ModelState.IsValid)
-            {
-                if (UploadedImages != null && UploadedImages.Count > 0)
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    foreach (var file in UploadedImages)
-                    {
-                        var fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + Path.GetExtension(file.FileName);
-                        var savePath = Path.Combine("wwwroot/images", fileName);
-                        using (var stream = new FileStream(savePath, FileMode.Create))
-                        {
-                            file.CopyTo(stream);
-                        }
-                        product.Images.Add("/images/" + fileName);
-                    }
+                    file.CopyTo(stream);
                 }
-                _productService.AddProduct(product);
-                Message = "Du lieu gui den hop le";
-            }
-            else
-            {
-                Message = "Du lieu gui den khong hop le";
-            }
-            return Page();
-        }
 
-        public IActionResult OnPostFindProductByName(string searchName)
-        {
-            products_search.Clear();
-            var searchResults = products.Where(p => p.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
-            if (searchResults.Any())
-            {
-                products_search.AddRange(searchResults);
+                imagePaths.Add($"/images/products/{fileName}");
             }
-            return Page();
-        }
 
-        public IActionResult OnPostUpdateProduct(int id, string name, string description, int price)
-        {
-            _productService.UpdateProduct(id, name, description, price);
+            product.Images = imagePaths;
+
+            _productService.AddProduct(product);
+
             return RedirectToPage("ProductPage");
         }
+        return Page();
+    }
+
+    public IActionResult OnPostUpdateProduct(int id, string name, string description, decimal price, List<IFormFile> images)
+    {
+        var existingProduct = _productService.GetProductById(id);
+        if (existingProduct == null)
+        {
+            ModelState.AddModelError("", "Sản phẩm không tồn tại.");
+            return Page();
+        }
+
+        existingProduct.Name = name;
+        existingProduct.Description = description;
+        existingProduct.Price = price;
+
+        if (images != null && images.Count > 0)
+        {
+            var imagePaths = new List<string>();
+            var uploadPath = Path.Combine("wwwroot", "images", "products");
+
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+            }
+
+            foreach (var file in images)
+            {
+                var fileName = $"{Guid.NewGuid()}_{file.FileName}";
+                var filePath = Path.Combine(uploadPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
+                imagePaths.Add($"/images/products/{fileName}");
+            }
+
+            existingProduct.Images = imagePaths;
+        }
+
+        _productService.UpdateProduct(existingProduct);
+        return RedirectToPage("ProductPage");
+    }
+
+    public IActionResult OnPostDeleteProduct(int id)
+    {
+        _productService.DeleteProduct(id);
+        return RedirectToPage("ProductPage", new { id = (int?)null });
+    }
+
+    public void OnPostSearch(string searchName)
+    {
+        products_search = _productService.SearchProducts(searchName);
     }
 }

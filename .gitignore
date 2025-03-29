@@ -48,8 +48,7 @@ publish/
 
 ## File storage
 wwwroot/uploads/
-wwwroot/images/*
-!.gitkeep
+wwwroot/images/products/
 
 ## Resharper
 _ReSharper*/

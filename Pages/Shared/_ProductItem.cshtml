@@ -1,11 +1,32 @@
 ﻿@using QLBH.Models
 @model Product
 
-<div class="card my-4" style="width: 20rem;">
-    <h2 class="card-header text-info">@Model.Name</h2>
+<div class="card my-4 product-card" style="width: 20rem;">
+    <a class="card-header text-info" asp-page="ProductPage" asp-route-id="@Model.Id">@Model.Name</a>
     <div class="card-body">
+        @if (Model.Images != null && Model.Images.Any())
+        {
+            <img src="@Model.Images.FirstOrDefault()" class="card-img-top product-image" alt="Ảnh sản phẩm">
+        }
+        else
+        {
+            <p class="text-muted">Không có ảnh</p>
+        }
         <p class="card-text">@Model.Description</p>
         <p class="card-text">@Model.Price</p>
-        <a href="#" class="btn btn-secondary btn-sm">Dat hang</a>
+        <a href="#" class="btn btn-secondary">Đặt hàng</a>
     </div>
 </div>
+
+<style>
+    .product-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    a {
+        font-size: 1.8rem;
+    }
+</style>

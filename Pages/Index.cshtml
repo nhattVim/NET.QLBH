@@ -12,27 +12,6 @@
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-@* @{
-    var product1 = new Product() { Name = "Iphone 11", Price = 1000, Description = "Iphone 11" };
-    var product2 = new Product() { Name = "Iphone 12", Price = 2000, Description = "Iphone 12" };
-    var product3 = new Product() { Name = "Iphone 13", Price = 3000, Description = "Iphone 13" };
-} *@
-
-@* <div class="row">
-    <div class="col">
-        <partial name="_ProductItem" model="product1"></partial>
-    </div>
-    <div class="col">
-        @await Html.PartialAsync("_ProductItem", product2)
-    </div>
-    <div class="col">
-        @{
-            await Html.RenderPartialAsync("_ProductItem", product3);
-        }
-    </div>
-</div> *@
 
 @await Html.PartialAsync("_Message")
-
-@* @await Component.InvokeAsync("ProductBox") *@
 @await Component.InvokeAsync("ProductBox", true)
