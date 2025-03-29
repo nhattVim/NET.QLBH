@@ -1,3 +1,21 @@
+## QLBH - Quản Lý Bán Hàng
+
+-   QLBH là một ứng dụng web được xây dựng bằng ASP.NET Core Razor Pages, nhằm hỗ trợ quản lý sản phẩm, danh mục, và các chức năng liên quan đến bán hàng. Đây chỉ là một bài thực hành trên trường, nên dự án chưa hoàn thiện và có thể thiếu một số tính năng quan trọng
+
+-   Dự án này cung cấp các tính năng như:
+
+    -   Thêm, sửa, xóa sản phẩm.
+    -   Tìm kiếm và lọc sản phẩm theo danh mục.
+    -   Quản lý danh mục sản phẩm.
+    -   Hiển thị danh sách sản phẩm với hình ảnh.
+
+## Công nghệ sử dụng
+
+-   **ASP.NET Core**: Framework chính để xây dựng ứng dụng web.
+-   **Entity Framework Core**: ORM để làm việc với cơ sở dữ liệu.
+-   **Bootstrap**: Thư viện CSS để tạo giao diện người dùng.
+-   **SQL Server**: Cơ sở dữ liệu để lưu trữ thông tin sản phẩm và danh mục.
+
 ## Giao diện
 
 ### Danh sách sản phẩm
