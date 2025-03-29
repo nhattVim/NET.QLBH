@@ -78,7 +78,7 @@ namespace QLBH.Pages
                         {
                             file.CopyTo(stream);
                         }
-                        product.ImagePaths.Add("/images/" + fileName);
+                        product.Images.Add("/images/" + fileName);
                     }
                 }
                 _productService.AddProduct(product);
@@ -102,39 +102,9 @@ namespace QLBH.Pages
             return Page();
         }
 
-        // public IActionResult OnPostUpdateProduct(int id, string name, string description, int price)
-        // {
-        //     _productService.UpdateProduct(id, name, description, price);
-        //     return RedirectToPage("ProductPage");
-        // }
-        public async Task<IActionResult> OnPostUpdateProduct(int id, string name, string description, int price, List<IFormFile> images)
+        public IActionResult OnPostUpdateProduct(int id, string name, string description, int price)
         {
             _productService.UpdateProduct(id, name, description, price);
-
-            if (images != null && images.Any())
-            {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-                Directory.CreateDirectory(uploadsFolder); // Đảm bảo thư mục tồn tại
-
-                var imagePaths = new List<string>();
-                foreach (var file in images)
-                {
-                    if (file.Length > 0)
-                    {
-                        var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-
-                        var relativePath = "/images/" + uniqueFileName;
-                        imagePaths.Add(relativePath);
-                    }
-                }
-
-                _productService.UpdateProductImages(id, imagePaths);
-            }
             return RedirectToPage("ProductPage");
         }
     }

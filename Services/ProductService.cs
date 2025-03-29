@@ -49,19 +49,6 @@ public class ProductService
         }
     }
 
-    public void UpdateProductImages(int productId, List<string> newImagePaths)
-    {
-        var product = products.FirstOrDefault(p => p.Id == productId);
-        if (product != null)
-        {
-            if (product.ImagePaths == null)
-                product.ImagePaths = new List<string>();
-
-            product.ImagePaths.AddRange(newImagePaths);
-        }
-    }
-
-
     public void DeleteProduct(Product product)
     {
         products.RemoveAll(p => p.Id == product.Id);

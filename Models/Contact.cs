@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using QLBH.Validation;
 
 namespace QLBH.Models;
 
@@ -20,7 +21,7 @@ public class Contact
 
     [BindProperty]
     [DataType(DataType.Date)]
-    // [CustomBirthDate(ErrorMessage = "Ngay sinh khong hop le")]
+    [CustomBirthDate(ErrorMessage = "Ngay sinh khong hop le")]
     public DateTime DateOfBirth { get; set; }
 
     [BindProperty]
