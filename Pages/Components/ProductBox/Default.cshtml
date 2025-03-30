@@ -3,7 +3,7 @@
 <div class="row">
     @foreach (var product in Model)
     {
-        <div class="col">
+        <div class="col-md-4 ">
             @await Html.PartialAsync("_ProductItem", product)
         </div>
     }
