@@ -1,7 +1,6 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using QLBH.Models;
+using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace QLBH.Services;
 
@@ -28,6 +27,17 @@ public class ProductService
     {
         _context.Products.RemoveRange(_context.Products);
         _context.SaveChanges();
+
+        // Reset ID của bảng Product về 0
+        using (var connection = _context.Database.GetDbConnection())
+        {
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "DBCC CHECKIDENT ('Product', RESEED, 0)";
+                command.ExecuteNonQuery();
+            }
+        }
     }
 
     public void LoadDefaultProducts()
