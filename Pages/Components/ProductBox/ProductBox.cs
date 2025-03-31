@@ -7,24 +7,31 @@ namespace QLBH.Pages.Components.ProductBox;
 
 public class ProductBox : ViewComponent
 {
-    List<Product> products = new List<Product>();
+    private readonly ProductService _productService;
 
     public ProductBox(ProductService productService)
     {
-        products = productService.GetProducts();
+        _productService = productService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(bool sapxeptang = true)
+    public async Task<IViewComponentResult> InvokeAsync(bool sapxeptang = true, int? categoryId = 0, List<Product>? product_list = null)
     {
-        List<Product> _products = new List<Product>();
-        if (sapxeptang)
+        List<Product> products = await Task.Run(() =>
         {
-            _products = await Task.Run(() => products.OrderBy(p => p.Price).ToList());
-        }
-        else
-        {
-            _products = await Task.Run(() => products.OrderByDescending(p => p.Price).ToList());
-        }
-        return View<List<Product>>(_products);
+            var result = product_list ?? _productService.GetProducts();
+
+            if (categoryId.HasValue && categoryId.Value > 0)
+            {
+                result = result.Where(p => p.CategoryId == categoryId.Value).ToList();
+            }
+
+            result = sapxeptang
+                ? result.OrderBy(p => p.Price).ToList()
+                : result.OrderByDescending(p => p.Price).ToList();
+
+            return result;
+        });
+
+        return View<List<Product>>(products);
     }
 }

@@ -58,7 +58,17 @@
 }
 else
 {
-    @await Component.InvokeAsync("ProductBox", true)
+    <form method="get">
+        <label class="form-label">Chọn danh mục:</label>
+        <select class="form-select" asp-for="@Model.categoryId" onchange="this.form.submit()" required>
+            <option value="0" selected>Tất cả</option>
+            @foreach (var category in Model.categories)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+        </select>
+    </form>
+    @await Component.InvokeAsync("ProductBox", new { sapxeptang = true, Model.categoryId })
 
     <hr>
     <a class="btn btn-primary" asp-page="ProductPage" asp-page-handler="RemoveAll">Xóa tất cả</a>
@@ -95,6 +105,16 @@ else
                             <span class="text-danger" asp-validation-for="@Model.product.Price"></span>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Chọn danh mục:</label>
+                            <select class="form-select" asp-for="@Model.product.CategoryId" required>
+                                <option value="" disabled selected>Chọn danh mục</option>
+                                @foreach (var category in Model.categories)
+                                {
+                                    <option value="@category.Id">@category.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Ảnh sản phẩm:</label>
                             <input type="file" name="UploadedImages" multiple class="form-control" />
                         </div>
@@ -124,13 +144,6 @@ else
 
     @if (products_search != null && products_search.Any())
     {
-        <div class="row">
-            @foreach (var item in products_search)
-            {
-                <div class="col">
-                    @await Html.PartialAsync("_ProductItem", item)
-                </div>
-            }
-        </div>
+        @await Component.InvokeAsync("ProductBox", new { sapxeptang = true, product_list = products_search })
     }
 }

@@ -2,8 +2,6 @@ using QLBH.Models;
 using QLBH.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 
 namespace QLBH.Pages;
 
@@ -12,7 +10,11 @@ public class ProductPageModel : PageModel
     [BindProperty]
     public Product product { get; set; }
 
+    [BindProperty]
+    public int categoryId { get; set; }
+
     public List<Product> products { get; set; }
+    public List<Category> categories { get; set; }
     public List<Product> products_search { get; set; }
     public string Message { get; set; }
     public bool IsProductDetail { get; set; }
@@ -26,9 +28,10 @@ public class ProductPageModel : PageModel
         Message = string.Empty;
         products_search = new List<Product>();
         products = _productService.GetProducts();
+        categories = _productService.GetCategories();
     }
 
-    public void OnGet(int? id)
+    public void OnGet(int? id, int? categoryId)
     {
         if (id != null)
         {
@@ -39,6 +42,14 @@ public class ProductPageModel : PageModel
         else
         {
             ViewData["Title"] = $"Danh sách sản phẩm";
+            if (categoryId.HasValue && categoryId.Value > 0)
+            {
+                this.categoryId = categoryId.Value;
+            }
+            else
+            {
+                this.categoryId = 0;
+            }
         }
     }
 
@@ -140,5 +151,10 @@ public class ProductPageModel : PageModel
     public void OnPostSearch(string searchName)
     {
         products_search = _productService.SearchProducts(searchName);
+    }
+
+    public void OnPostFilterByCategory(int categoryId)
+    {
+        products_search = _productService.GetProductsByCategory(categoryId);
     }
 }
