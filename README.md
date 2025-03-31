@@ -36,7 +36,7 @@
 
 ### Lọc sản phẩm theo danh mục
 
-![chưa có]()
+![](wwwroot/images/repo/5.png)
 
 ## Hướng dẫn chạy dự án
 
