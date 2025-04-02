@@ -14,10 +14,10 @@ public class Contact
     public int ContactId { get; set; }
 
     [BindProperty]
-    public string FirstName { get; set; }
+    public string? FirstName { get; set; }
 
     [BindProperty]
-    public string LastName { get; set; }
+    public string? LastName { get; set; }
 
     [BindProperty]
     [DataType(DataType.Date)]
@@ -26,5 +26,5 @@ public class Contact
 
     [BindProperty]
     [EmailAddress(ErrorMessage = "Nhap sai dinh dang")]
-    public string Email { get; set; }
+    public string? Email { get; set; }
 }

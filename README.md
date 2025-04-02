@@ -44,45 +44,37 @@
 
     -   [.NET SDK](https://dotnet.microsoft.com/download)
 
-    -   SQL Server
+        Cài đặt EF Core Tools:
 
-    Cài đăt các gói cần thiết
+        ```powershell
+        dotnet tool install --global dotnet-ef
+        ```
 
-    ```powershell
-    dotnet add package Microsoft.EntityFrameworkCore
-    dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-    dotnet add package Microsoft.EntityFrameworkCore.Tools
-    ```
-
-    Cài đặt EF Core Tools:
-
-    ```powershell
-    dotnet tool install --global dotnet-ef
-    ```
+    -   [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
 2.  **Cấu hình cơ sở dữ liệu**:
 
-    -   Cập nhật chuỗi kết nối trong file `appsettings.json`.
+    -   Cập nhật chuỗi kết nối trong file `Models/QLBHContext.cs`.
 
 3.  Tạo và áp dụng Migration
 
     -   Tạo migration đầu tiên (nếu chưa có):
 
-    ```powershell
-    dotnet ef migrations add InitialCreate
-    ```
+        ```powershell
+        dotnet ef migrations add InitialCreate
+        ```
 
     -   Cập nhật cơ sở dữ liệu:
 
-    ```
-    dotnet ef database update
-    ```
+        ```
+        dotnet ef database update
+        ```
 
 4.  **Chạy ứng dụng**:
 
     -   Mở terminal và chạy lệnh:
         ```bash
-        dotnet run
+        dotnet watch run
         ```
     -   Truy cập ứng dụng tại `http://localhost:5000`.
 
