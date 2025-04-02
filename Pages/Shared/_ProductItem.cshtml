@@ -6,7 +6,9 @@
     <div class="card-body">
         @if (Model.Images != null && Model.Images.Any())
         {
-            <img src="@Model.Images.FirstOrDefault()" class="card-img-top product-image" alt="Ảnh sản phẩm">
+            <a asp-page="ProductPage" asp-route-id="@Model.Id">
+                <img src="@Model.Images.FirstOrDefault()" class="card-img-top product-image" alt="Ảnh sản phẩm">
+            </a>
         }
         else
         {
@@ -14,7 +16,7 @@
         }
         <p class="card-text">@Model.Description</p>
         <p class="card-text">@Model.Price</p>
-        <a href="#" class="btn btn-secondary">Đặt hàng</a>
+        <a href="#" class="btn btn-primary">Đặt hàng</a>
     </div>
 </div>
 
