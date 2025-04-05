@@ -22,17 +22,23 @@ namespace QLBH.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index(int? categoryId)
+        public async Task<IActionResult> Index(string searchString, int? categoryId)
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", categoryId);
+            var products = _context.Products.AsQueryable();
 
-            var products = _context.Products.Include(p => p.Category).AsQueryable();
             if (categoryId.HasValue)
             {
-                products = products.Where(p => p.CategoryId == categoryId);
+                products = products.Where(p => p.CategoryId == categoryId.Value);
             }
 
-            return View(await products.ToListAsync());
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(p => p.Name.Contains(searchString));
+            }
+
+            var productList = await products.ToListAsync();
+            ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name", categoryId);
+            return View(productList);
         }
 
         // GET: Product/Details/5
