@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace QLBH.Models;
 
-public partial class QLBHContext : DbContext
+public partial class QlbhContext : DbContext
 {
-    public QLBHContext()
+    public QlbhContext()
     {
     }
 
-    public QLBHContext(DbContextOptions<QLBHContext> options)
+    public QlbhContext(DbContextOptions<QlbhContext> options)
         : base(options)
     {
     }
@@ -48,9 +48,13 @@ public partial class QLBHContext : DbContext
 
             entity.ToTable("Product");
 
+            entity.HasIndex(e => e.CategoryId, "IX_Product_category_id");
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CategoryId).HasColumnName("category_id");
-            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Description)
+                .HasMaxLength(500)
+                .HasColumnName("description");
             entity.Property(e => e.Images).HasColumnName("images");
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
