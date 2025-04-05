@@ -52,11 +52,17 @@
 
     -   [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
-2.  **Cấu hình cơ sở dữ liệu**:
+2.  **Clone dự án về máy**
+
+    -   mvc `git clone -b mvc https://github.com/nhattVim/NET.QLBH.git --depth 1`
+
+    -   razor page `git clone -b razorpage https://github.com/nhattVim/NET.QLBH.git --depth 1`
+
+3.  **Cấu hình cơ sở dữ liệu**:
 
     -   Cập nhật chuỗi kết nối trong file `Models/QLBHContext.cs`.
 
-3.  Tạo và áp dụng Migration
+4.  **Tạo và áp dụng Migration**
 
     -   Tạo migration đầu tiên (nếu chưa có):
 
@@ -70,7 +76,7 @@
         dotnet ef database update
         ```
 
-4.  **Chạy ứng dụng**:
+5.  **Chạy ứng dụng**:
 
     -   Mở terminal và chạy lệnh:
         ```bash
