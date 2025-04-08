@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using QLBH.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<QlbhContext>();
+builder.Services.AddDbContext<QlbhContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 
