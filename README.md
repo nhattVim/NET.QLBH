@@ -62,7 +62,7 @@
 
 3.  **Cấu hình cơ sở dữ liệu**:
 
-    -   Cập nhật chuỗi kết nối trong file `Models/QLBHContext.cs`.
+    -   Cập nhật chuỗi kết nối trong file `appsettings.json`.
 
 4.  **Tạo và áp dụng Migration**
 
