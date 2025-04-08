@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using QLBH.Models;
 using QLBH.Services;
 
@@ -5,8 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<QLBHContext>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddDbContext<QLBHContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 var app = builder.Build();
 
