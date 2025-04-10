@@ -1,6 +1,45 @@
-@QLBH_HostAddress = http://localhost:5218
+@QLBH = http://localhost:5218
 
-GET {{QLBH_HostAddress}}/weatherforecast/
+GET {{QLBH}}/api/Product
 Accept: application/json
 
 ###
+
+GET {{QLBH}}/api/Product/325
+Accept: application/json
+
+###
+POST {{QLBH}}/api/Product
+Content-Type: application/json
+
+{
+    "name": "Sản phẩm mới",
+    "description": "Mô tả sản phẩm mới",
+    "price": 50000,
+    "stock": 100,
+    "categoryId": 1,
+    "images": "[\"/images/default/iphone15.jpg\"]"
+}
+
+###
+PUT {{QLBH}}/api/Product/325
+Content-Type: application/json
+
+{
+    "id": 325,
+    "name": "Sản phẩm mới cập nhật",
+    "description": "Mô tả sản phẩm mới",
+    "price": 50000,
+    "stock": 100,
+    "categoryId": 1,
+    "images": "[\"/images/default/iphone15.jpg\"]"
+}
+
+###
+
+DELETE {{QLBH}}/api/Product/325
+
+###
+
+GET {{QLBH}}/api/User
+Accept: application/json
