@@ -1,4 +1,4 @@
-# [MVC](https://github.com/nhattVim/NET.QLBH/tree/mvc) | [Razor page](https://github.com/nhattVim/NET.QLBH/tree/razorpagek)
+# [MVC](https://github.com/nhattVim/NET.QLBH/tree/mvc) | [Razor page](https://github.com/nhattVim/NET.QLBH/tree/razor) | [Web Api](https://github.com/nhattVim/NET.QLBH/tree/webapi)
 
 ## QLBH - Quản Lý Bán Hàng
 
