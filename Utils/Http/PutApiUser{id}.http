@@ -1,0 +1,21 @@
+@contentType = application/json
+
+#################################
+### Request: PUT /api/User/{id}
+#################################
+
+### Path Parameter: id
+@id = 0
+
+
+PUT http://localhost:5000/api/User/{{id}}
+Content-Type: {{contentType}}
+
+{
+  "id": 0,
+  "username": "username",
+  "email": "email",
+  "password": "password",
+  "role": "role"
+}
+

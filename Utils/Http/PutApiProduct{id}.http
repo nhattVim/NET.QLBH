@@ -1,0 +1,47 @@
+@contentType = application/json
+
+####################################
+### Request: PUT /api/Product/{id}
+####################################
+
+### Path Parameter: id
+@id = 0
+
+
+PUT http://localhost:5000/api/Product/{{id}}
+Content-Type: {{contentType}}
+
+{
+  "id": 0,
+  "name": "name",
+  "description": "description",
+  "images": "images",
+  "price": 0.0,
+  "stock": 0,
+  "categoryId": 0,
+  "category": {
+    "id": 0,
+    "name": "name",
+    "description": "description",
+    "products": [
+      {
+        "id": 0,
+        "name": "name",
+        "description": "description",
+        "images": "images",
+        "price": 0.0,
+        "stock": 0,
+        "categoryId": 0,
+        "category": {
+          "id": 0,
+          "name": "name",
+          "description": "description",
+          "products": [
+            null
+          ]
+        }
+      }
+    ]
+  }
+}
+
