@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace QLBH.Models;
 
@@ -12,7 +11,6 @@ public partial class Product
 
     public string Description { get; set; } = null!;
 
-    [ValidateNever]
     public string Images { get; set; } = null!;
 
     public decimal Price { get; set; }
