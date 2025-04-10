@@ -48,7 +48,25 @@
             <label class="form-label">Cập nhật ảnh (chọn nhiều ảnh mới nếu muốn)</label>
             <input type="file" class="form-control" name="images" multiple />
         </div>
-        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <div class="form-group">
+            <div class="mb-3">
+                <label class="form-label">Chọn danh mục:</label>
+                <select class="form-select" name="categoryId" required>
+                    @foreach (var category in Model.categories)
+                    {
+                        if (category.Id == Model.product.CategoryId)
+                        {
+                            <option value="@category.Id" selected>@category.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">Cập nhật</button>
     </form>
 
     <form method="post" asp-page-handler="DeleteProduct" class="mt-3">

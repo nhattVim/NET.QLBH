@@ -99,7 +99,7 @@ public class ProductPageModel : PageModel
         return Page();
     }
 
-    public IActionResult OnPostUpdateProduct(int id, string name, string description, decimal price, List<IFormFile> images)
+    public IActionResult OnPostUpdateProduct(int id, string name, string description, decimal price, int categoryId, List<IFormFile> images)
     {
         var existingProduct = _productService.GetProductById(id);
         if (existingProduct == null)
@@ -111,6 +111,7 @@ public class ProductPageModel : PageModel
         existingProduct.Name = name;
         existingProduct.Description = description;
         existingProduct.Price = price;
+        existingProduct.CategoryId = categoryId;
 
         if (images != null && images.Count > 0)
         {
