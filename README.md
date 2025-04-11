@@ -18,27 +18,25 @@
 -   **Bootstrap**: Thư viện CSS để tạo giao diện người dùng.
 -   **SQL Server**: Cơ sở dữ liệu để lưu trữ thông tin sản phẩm và danh mục.
 
-## Giao diện
+## Test API
 
-### Danh sách sản phẩm
+### Test bằng Swagger
 
 ![](wwwroot/images/repo/1.png)
 
-### Chi tiết sản phẩm
-
 ![](wwwroot/images/repo/2.png)
 
-### Thêm sản phẩm mới
+### Test bằng Rest Client File
 
 ![](wwwroot/images/repo/3.png)
 
-### Tìm kiếm sản phẩm
-
 ![](wwwroot/images/repo/4.png)
 
-### Lọc sản phẩm theo danh mục
+### Test bằng postman
 
 ![](wwwroot/images/repo/5.png)
+
+![](wwwroot/images/repo/6.png)
 
 ## Hướng dẫn chạy dự án
 
@@ -58,7 +56,9 @@
 
     -   mvc `git clone -b mvc https://github.com/nhattVim/NET.QLBH.git --depth 1`
 
-    -   razor page `git clone -b razorpage https://github.com/nhattVim/NET.QLBH.git --depth 1`
+    -   razor `git clone -b razor https://github.com/nhattVim/NET.QLBH.git --depth 1`
+
+    -   webapi `git clone -b webapi https://github.com/nhattVim/NET.QLBH.git --depth 1`
 
 3.  **Cấu hình cơ sở dữ liệu**:
 
