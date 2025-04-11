@@ -54,11 +54,19 @@
 
     -   [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
-2.  **Cấu hình cơ sở dữ liệu**:
+2.  **Clone dự án về máy**
+
+    -   mvc `git clone -b mvc https://github.com/nhattVim/NET.QLBH.git --depth 1`
+
+    -   razor `git clone -b razor https://github.com/nhattVim/NET.QLBH.git --depth 1`
+
+    -   webapi `git clone -b webapi https://github.com/nhattVim/NET.QLBH.git --depth 1`
+
+3.  **Cấu hình cơ sở dữ liệu**:
 
     -   Cập nhật chuỗi kết nối trong file `appsettings.json`.
 
-3.  Tạo và áp dụng Migration
+4.  **Tạo và áp dụng Migration**
 
     -   Tạo migration đầu tiên (nếu chưa có):
 
@@ -72,13 +80,14 @@
         dotnet ef database update
         ```
 
-4.  **Chạy ứng dụng**:
+5.  **Chạy ứng dụng**:
 
     -   Mở terminal và chạy lệnh:
         ```bash
         dotnet watch run
         ```
     -   Truy cập ứng dụng tại `http://localhost:5000`.
+    -   Truy câp vào trang product trên navbar và nhấn nút nạp sản phẩm
 
 ## Đóng góp
 
