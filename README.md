@@ -40,6 +40,10 @@
 
 ![](wwwroot/images/repo/5.png)
 
+### Phân trang
+
+![](wwwroot/images/repo/6.png)
+
 ## Hướng dẫn chạy dự án
 
 1.  **Cài đặt các công cụ cần thiết**:

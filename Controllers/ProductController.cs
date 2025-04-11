@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +15,9 @@ namespace QLBH.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index(string searchString, int? categoryId)
+        public async Task<IActionResult> Index(string searchString, int? categoryId, int page = 1)
         {
+            int pageSize = 8;
             var products = _context.Products.AsQueryable();
 
             if (categoryId.HasValue)
@@ -36,8 +30,20 @@ namespace QLBH.Controllers
                 products = products.Where(p => p.Name.Contains(searchString));
             }
 
-            var productList = await products.ToListAsync();
+            int totalProducts = await products.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            var productList = await products
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
             ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name", categoryId);
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.SearchString = searchString;
+            ViewBag.SelectedCategoryId = categoryId;
+
             return View(productList);
         }
 
