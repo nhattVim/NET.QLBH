@@ -58,7 +58,9 @@
 
     -   mvc `git clone -b mvc https://github.com/nhattVim/NET.QLBH.git --depth 1`
 
-    -   razor page `git clone -b razorpage https://github.com/nhattVim/NET.QLBH.git --depth 1`
+    -   razor `git clone -b razor https://github.com/nhattVim/NET.QLBH.git --depth 1`
+
+    -   webapi `git clone -b webapi https://github.com/nhattVim/NET.QLBH.git --depth 1`
 
 3.  **Cấu hình cơ sở dữ liệu**:
 
