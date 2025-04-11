@@ -215,23 +215,20 @@ namespace QLBH.Controllers
         public async Task<IActionResult> DeleteAll()
         {
             var allProducts = _context.Products;
-            // foreach (var item in allProducts)
-            // {
-            //     var imageList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(item.Images);
-            //     if (imageList != null && imageList.Count > 0)
-            //     {
-            //         foreach (var imagePath in imageList)
-            //         {
-            //             var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath.TrimStart('/'));
-            //             if (System.IO.File.Exists(fullPath))
-            //             {
-            //                 System.IO.File.Delete(fullPath);
-            //             }
-            //         }
-            //     }
-            // }
             _context.Products.RemoveRange(allProducts);
             await _context.SaveChangesAsync();
+
+            // Reset ID của bảng Product về 0
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                await connection.OpenAsync();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "DBCC CHECKIDENT ('Product', RESEED, 0)";
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
