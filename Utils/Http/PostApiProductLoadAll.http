@@ -1,0 +1,11 @@
+@contentType = application/json
+
+########################################
+### Request: POST /api/Product/LoadAll
+########################################
+
+
+POST http://localhost:5000/api/Product/LoadAll
+Content-Type: {{contentType}}
+
+

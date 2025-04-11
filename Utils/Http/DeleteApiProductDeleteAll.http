@@ -1,0 +1,11 @@
+@contentType = application/json
+
+############################################
+### Request: DELETE /api/Product/DeleteAll
+############################################
+
+
+DELETE http://localhost:5000/api/Product/DeleteAll
+Content-Type: {{contentType}}
+
+
